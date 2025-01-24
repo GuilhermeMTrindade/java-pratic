@@ -24,39 +24,51 @@ public class Main {
         printaTexto("6. Sair.\n");
         out.print("Digite a sua escolha: ");
         opcaoMenu = ler.nextInt();
+        ler.nextLine();
     }
 
     public static void main (String[] args) {
-        Menu();
-        ler.nextLine();
-        switch (opcaoMenu) {
-            case 1:
-                do {
-                    printaTexto("\nDigite a tarefa que deseja adicionar:");
-                    tarefas.add(ler.nextLine());
+        do {
+            Menu();
+            switch (opcaoMenu) {
+                case 1:
+                    do {
+                        printaTexto("\nDigite a tarefa que deseja adicionar:");
+                        tarefas.add(ler.nextLine());
 
-                    printaTexto("\nDigite 1 para adicionar uma nova tarefa ou 2 para acessar o Menu: ");
+                        printaTexto("\nDigite 1 para adicionar uma nova tarefa ou 2 para acessar o Menu: ");
+                        opcaoSubMenu = ler.nextInt();
+                        ler.nextLine();
+
+                        if (opcaoSubMenu == 2) {
+                            break;
+                        }
+                    }
+                    while (opcaoSubMenu == 1);
+                    break;
+                case 2:
+                    printaTexto("\nDigite a tarefa que deseja visualizar: \nCaso deseje visualizar todas, digite 0.");
                     opcaoSubMenu = ler.nextInt();
-                    ler.nextLine();
-
-                    if (opcaoSubMenu == 2) {
-                        Menu();
+                    if (opcaoSubMenu == 0) {
+                        printaTexto("\nLista de tarefas cadastradas:");
+                        while (i < tarefas.size()) {
+                            printaTexto((i + 1) + ". " + tarefas.get(i));
+                            i++;
+                        }
+                    } else if (opcaoSubMenu > 0 && opcaoSubMenu < tarefas.size()){
+                            printaTexto("\n" + opcaoSubMenu + ". " +tarefas.get(opcaoSubMenu - 1));
+                    } else {
+                            printaTexto("Tarefa selecionada é inválida");
                     }
-                }
-                while (opcaoSubMenu == 1);
-                break;
-            case 2:
-                printaTexto("\nDigite a tarefa que deseja visualizar: \nCaso deseje visualizar todas, digite 0.");
-                opcaoSubMenu = ler.nextInt();
-                if (opcaoSubMenu == 0) {
-                    while (i < tarefas.size()) {
-                        printaTexto(tarefas.get(i));
-                        i++;
+                    break;
+                case 3:
+                    printaTexto("\n Digite a tarefa que deseja alterar: ");
+                    opcaoSubMenu = ler.nextInt();
+                    if (opcaoSubMenu > 0 && opcaoSubMenu < tarefas.size()){
+                        printaTexto("Digite a nova descrição da tarefa: " + tarefas.get(opcaoSubMenu - 1));
+                        tarefas.remove(opcaoSubMenu - 1);
                     }
-                } else {
-                    printaTexto(tarefas.get(opcaoSubMenu - 1));
-                }
-                break;
-        }
+            }
+        } while (opcaoMenu != 6);
     }
 }
