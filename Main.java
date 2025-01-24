@@ -1,42 +1,62 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import static java.lang.System.out;
 
 public class Main {
+    static Scanner ler = new Scanner(System.in);
+    static int opcaoMenu, opcaoSubMenu, i = 0, contador = 0;
+    static ArrayList<String> tarefas = new ArrayList<>();
+
+    public static String printaTexto(String texto) {
+        out.println(texto);
+        return texto;
+    }
+
+    public static void Menu(){
+        opcaoMenu = 0;
+        opcaoSubMenu = 0;
+        printaTexto("\nMenu do gerenciados de tarefas:");
+        printaTexto("1. Adicionar uma nova tarefa.");
+        printaTexto("2. Ver tarefas adicionadas.");
+        printaTexto("3. Alterar tarefas adicionadas.");
+        printaTexto("4. Completar tarefas..");
+        printaTexto("5. Deletar tarefas.");
+        printaTexto("6. Sair.\n");
+        out.print("Digite a sua escolha: ");
+        opcaoMenu = ler.nextInt();
+    }
+
     public static void main (String[] args) {
-        int qtdTarefas, tarefaEscolhida;
-        String tarefaInserida;
-        ArrayList<String> tarefasGeral = new ArrayList<>();
-
-        Scanner ler = new Scanner(System.in);
-
-        // Define a quantidade de tarefas a serem cadastradas na lista.
-        System.out.println("Digite a quantidade de tarefas a serem cadastradas: ");
-        qtdTarefas = ler.nextInt();
+        Menu();
         ler.nextLine();
+        switch (opcaoMenu) {
+            case 1:
+                do {
+                    printaTexto("\nDigite a tarefa que deseja adicionar:");
+                    tarefas.add(ler.nextLine());
 
-        // Cadastra cada tarefa individualmente em um espaço na lista.
-        int i = 1;
-        while (i <= qtdTarefas){
-            System.out.println("Insira o nome da " + i + "º tarefa: ");
-            tarefaInserida = ler.nextLine();
+                    printaTexto("\nDigite 1 para adicionar uma nova tarefa ou 2 para acessar o Menu: ");
+                    opcaoSubMenu = ler.nextInt();
+                    ler.nextLine();
 
-            if (!tarefaInserida.isEmpty()){
-                tarefasGeral.add(tarefaInserida);
-                i++;
-            } else {
-                System.out.println("Tarefa inserida é inválida. Tente novamente: ");
-            }
-        }
-
-        // Apresenta a tarefa escolhida caso tenha sido cadastrada, se não, informa que não foi cadastrado nenhuma tarefa.
-        if (qtdTarefas > 0){
-            System.out.println("Escolha a tarefa a ser apresentada: ");
-            tarefaEscolhida = ler.nextInt();
-            if (tarefaEscolhida <= tarefasGeral.size()) {
-                System.out.println(tarefasGeral.get(tarefaEscolhida - 1));
-            } else {
-                System.out.println("Tarefa escolhida é inválida. Tente novamente: ");
-            }
+                    if (opcaoSubMenu == 2) {
+                        Menu();
+                    }
+                }
+                while (opcaoSubMenu == 1);
+                break;
+            case 2:
+                printaTexto("\nDigite a tarefa que deseja visualizar: \nCaso deseje visualizar todas, digite 0.");
+                opcaoSubMenu = ler.nextInt();
+                if (opcaoSubMenu == 0) {
+                    while (i < tarefas.size()) {
+                        printaTexto(tarefas.get(i));
+                        i++;
+                    }
+                } else {
+                    printaTexto(tarefas.get(opcaoSubMenu - 1));
+                }
+                break;
         }
     }
 }
